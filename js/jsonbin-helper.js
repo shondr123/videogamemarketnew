@@ -65,3 +65,36 @@ export {
   getSubscribersRecord,
   updateSubscribersRecord
 };
+const FEEDBACKS_BIN_ID = "68895544f7e7a370d1f00a47";
+
+async function getFeedbacksRecord() {
+  const res = await fetch(`https://api.jsonbin.io/v3/b/${FEEDBACKS_BIN_ID}/latest`, {
+    headers: {
+      "X-Access-Key": ACCESS_KEY,
+    },
+  });
+  const data = await res.json();
+  return data.record.feedbacks || [];
+}
+
+async function updateFeedbacksRecord(feedbacks) {
+  const updatedData = { feedbacks };
+  const res = await fetch(`https://api.jsonbin.io/v3/b/${FEEDBACKS_BIN_ID}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Master-Key": MASTER_KEY,
+    },
+    body: JSON.stringify(updatedData),
+  });
+  return res.json();
+}
+
+export {
+  getFullRecord,
+  updateFullRecord,
+  getSubscribersRecord,
+  updateSubscribersRecord,
+  getFeedbacksRecord,
+  updateFeedbacksRecord
+};
