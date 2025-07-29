@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="assets/favicon.png" type="image/png" />
+  <title>Game Market Login</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .login-container {
+      background-color: #222;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #ffd700aa;
+      width: 320px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+    h2 {
+      color: #ffd700;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 12px 10px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      padding: 12px 0;
+      margin: 8px 0;
+      border: none;
+      border-radius: 6px;
+      background-color: #ffd700;
+      color: #000;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #e6c200;
+    }
+    #message {
+      margin-top: 12px;
+      font-weight: bold;
+      min-height: 24px;
+    }
+    #message.error {
+      color: #ff4c4c;
+    }
+    #message.success {
+      color: #4caf50;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Game Market Login</h2>
+    <input type="email" id="email" placeholder="Email" autocomplete="username" />
+    <input type="password" id="password" placeholder="Password" autocomplete="current-password" />
+    <button id="loginBtn">Login</button>
+    <button id="registerBtn">Register</button>
+    <button id="guestBtn">Continue as Guest</button>
+    <div id="message"></div>
+  </div>
+
+  <!-- Firebase App (the core Firebase SDK) -->
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      createUserWithEmailAndPassword,
+      signInAnonymously
+    } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+
+    // Your web app's Firebase configuration (תעדכן עם הקונפיג שלך)
+    const firebaseConfig = {
+      apiKey: "AIzaSyCYMpEaL4VnGK2YWBpLaZrwrwSHTC7GIso",
+      authDomain: "game-store-3fec7.firebaseapp.com",
+      projectId: "game-store-3fec7",
+      storageBucket: "game-store-3fec7.appspot.com",
+      messagingSenderId: "703324652811",
+      appId: "1:703324652811:web:f6fffceb55618a8f9d8e0e",
+      measurementId: "G-SBRQEJW31P"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const loginBtn = document.getElementById("loginBtn");
+    const registerBtn = document.getElementById("registerBtn");
+    const guestBtn = document.getElementById("guestBtn");
+    const messageDiv = document.getElementById("message");
+
+    function showMessage(msg, isError = false) {
+      messageDiv.textContent = msg;
+      messageDiv.className = isError ? "error" : "success";
+    }
+
+    loginBtn.addEventListener("click", async () => {
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!email || !password) {
+        showMessage("Please enter email and password", true);
+        return;
+      }
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        showMessage("Login successful!");
+        // כאן ניתן להפנות לעמוד אחר
+        window.location.href = "index.html";
+      } catch (error) {
+        showMessage("Login failed: " + error.message, true);
+      }
+    });
+
+    registerBtn.addEventListener("click", async () => {
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!email || !password) {
+        showMessage("Please enter email and password", true);
+        return;
+      }
+
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        showMessage("Registration successful! You can now login.");
+      } catch (error) {
+        showMessage("Registration failed: " + error.message, true);
+      }
+    });
+
+    guestBtn.addEventListener("click", async () => {
+      try {
+        await signInAnonymously(auth);
+        showMessage("Guest login successful!");
+        // כאן ניתן להפנות לעמוד אחר
+         window.location.href = "index.html";
+      } catch (error) {
+        showMessage("Guest login failed: " + error.message, true);
+      }
+    });
+  </script>
+</body>
+</html>

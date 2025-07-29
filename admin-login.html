@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="assets/favicon.png" type="image/png" />
+</head>
+<body>
+  <header class="site-header">
+    <button id="toggle-theme" style="position: absolute; top: 20px; right: 20px;">🌓</button>
+    <h1>🔐 Admin Login</h1>
+    <nav class="centered-nav">
+      <a href="index.html">Home</a>
+      <a href="market.html">Market</a>
+      <a href="contact.html">Contact</a>
+      <a href="about.html">About</a>
+      <a href="admin-login.html">Admin</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="admin-login-section" style="max-width: 400px; margin: 40px auto;">
+      <div class="admin-login-card">
+        <h2>Enter Admin Password</h2>
+        <input type="password" id="password" placeholder="••••••••••" />
+        <button id="login">Login</button>
+        <p id="error" style="color:red; margin-top:10px;"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Game Market. All rights reserved.</p>
+  </footer>
+
+  <script src="js/admin-login.js" type="module"></script>
+  <script src="js/theme.js" type="module"></script>
+</body>
+</html>

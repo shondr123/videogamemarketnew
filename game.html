@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Game Details</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="assets/favicon.png" type="image/png" />
+</head>
+<body>
+  <header>
+    <button id="toggle-theme" style="position: absolute; top: 20px; right: 20px;">🌓</button>
+    <h1>Game Details</h1>
+    <nav>
+      <a href="market.html">Back to Market</a>
+    </nav>
+  </header>
+
+  <main id="game-details" style="text-align:center; padding:40px;">
+    <h2 id="game-title"></h2>
+    <img id="game-image" src="" alt="" style="max-width: 300px; border-radius: 8px; margin: 20px 0;" />
+    <p id="game-price"></p>
+    <p id="game-description" style="margin: 20px auto; max-width: 700px;"></p>
+    <div id="video-container" style="margin-top: 30px;"></div>
+  </main>
+
+  <script src="js/game.js" type="module"></script>
+  <script src="js/theme.js" type="module"></script>
+</body>
+</html>

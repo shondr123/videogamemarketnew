@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="assets/favicon.png" type="image/png" />
+  <style>
+    .modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .modal.hidden {
+      display: none;
+    }
+    .modal-content {
+      background: #111;
+      padding: 20px 30px;
+      border-radius: 8px;
+      color: #ffd700;
+      text-align: center;
+      max-width: 300px;
+      font-weight: bold;
+    }
+    .modal-content button {
+      margin: 10px;
+      background: #ffd700;
+      border: none;
+      padding: 8px 15px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 4px;
+      min-width: 80px;
+    }
+    .modal-content button:hover {
+      background: #e6c200;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button id="toggle-theme" style="position: absolute; top: 20px; right: 20px;">🌓</button>
+    <h1>Admin Dashboard</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="market.html">Market</a>
+      <a href="admin-login.html">Logout</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Add New Game</h2>
+    <div class="admin-card">
+      <form id="add-game-form">
+        <input type="text" id="title" placeholder="Game Title" required />
+        <input type="number" id="price" placeholder="Price (₪)" required />
+        <input type="number" step="0.1" id="rating" placeholder="Rating (1–5)" required />
+        <input type="text" id="image" placeholder="Image URL (e.g. https://i.imgur.com/abc123.jpg)" required />
+        <textarea id="description" placeholder="Game Description" rows="4" required></textarea>
+        <input type="text" id="video" placeholder="YouTube Embed URL (e.g. https://www.youtube.com/embed/VIDEO_ID)" />
+        <div id="preview" style="margin: 10px 0;"></div>
+        <button type="submit">Add Game</button>
+      </form>
+      <p id="admin-response"></p>
+    </div>
+
+    <h2>Current Admin Added Games</h2>
+    <section id="game-list" class="game-grid"></section>
+
+    <h2>Newsletter Subscribers</h2>
+    <section id="newsletter-list" class="admin-card"></section>
+
+    <h2>📢 שלח מייל לכלל הנרשמים</h2>
+    <div class="admin-card" style="margin-top: 20px;">
+        <form id="broadcast-form">
+            <label for="broadcast-message" style="font-weight: bold; display: block; margin-bottom: 5px;">כתוב את ההודעה לשליחה:</label>
+            <textarea id="broadcast-message" rows="5" placeholder="הקלד כאן את ההודעה שתרצה לשלוח לכל הנרשמים..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 16px;"></textarea>
+            <button type="submit" style="margin-top: 10px; padding: 10px 20px; background-color: gold; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">📨 שלח מייל לכל הנרשמים</button>
+            <p id="broadcast-status" style="margin-top: 10px; font-weight: bold;"></p>
+        </form>
+</div>
+  </main>
+
+  <div id="confirm-modal" class="modal hidden">
+    <div class="modal-content">
+      <p>אתה בטוח שברצונך למחוק את המשחק?</p>
+      <button id="confirm-yes">אישור</button>
+      <button id="confirm-no">ביטול</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script src="js/admin-dashboard.js" type="module"></script>
+  <script src="js/theme.js" type="module"></script>
+</body>
+</html>

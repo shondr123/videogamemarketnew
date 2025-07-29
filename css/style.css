@@ -1,0 +1,423 @@
+/* משתנים ברירת מחדל (Light Mode) */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --accent: gold;
+  --card-bg: #f0f0f0;
+  --btn-bg: #FFD700;
+  --btn-text: #000;
+  --btn-hover-bg: #e6c200;
+  --hover-color: #ff00ff;
+  --input-bg: #ffffff;
+  --input-border: #ccc;
+}
+
+/* מצב כהה */
+body.dark {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  --card-bg: #1e1e1e;
+  --btn-bg: #FFD700;
+  --btn-text: #000;
+  --btn-hover-bg: #e6c200;
+  --hover-color: #00ffff;
+  --input-bg: #1c1c1c;
+  --input-border: #444;
+}
+
+/* בסיס */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background-color 0.4s, color 0.4s;
+}
+
+header, footer {
+  background-color: var(--card-bg);
+  padding: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+header h1, footer p {
+  color: var(--accent);
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+nav a {
+  color: var(--text-color);
+  text-decoration: none;
+  transition: color 0.3s;
+  font-weight: bold;
+}
+
+nav a:hover {
+  color: var(--hover-color);
+}
+
+main {
+  flex: 1;
+  padding: 40px;
+  max-width: 1200px;
+  width: 100%;
+  text-align: center;
+}
+
+.hero {
+  background-color: var(--card-bg);
+  padding: 40px;
+  border-radius: 10px;
+  margin-bottom: 40px;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.game-card {
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  padding: 20px;
+  transition: transform 0.3s;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  text-align: center;
+  position: relative;
+}
+
+.game-card:hover {
+  transform: scale(1.05);
+}
+
+.game-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.game-card .btn {
+  margin-top: 10px;
+}
+
+.btn, button {
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.btn:hover, button:hover {
+  background-color: var(--btn-hover-bg);
+}
+
+/* טפסים */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 400px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+form input, form select, form textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+form button {
+  width: 100%;
+}
+
+#response, #purchase-response, #admin-response, #newsletter-response {
+  margin-top: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* כרטיסים נוספים */
+.about-card, .admin-card, .contact-card {
+  background-color: var(--card-bg);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.15);
+  margin-bottom: 20px;
+  color: var(--text-color);
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+#search-input, #sort-select {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid var(--input-border);
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+/* אזור המלצות */
+.testimonial, .newsletter-list {
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 10px;
+  color: var(--text-color);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
+}
+
+.newsletter-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.newsletter-list li {
+  border-bottom: 1px solid var(--input-border);
+  padding: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.delete-btn:hover {
+  background-color: darkred;
+}
+
+/* מצב ניגודיות כהה */
+.simple-header {
+  width: 100%;
+  background-color: #121212;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.centered-nav {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.centered-nav a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+  font-size: 1rem;
+}
+
+.centered-nav a:hover {
+  color: var(--hover-color);
+}
+
+#toggle-theme {
+  position: absolute;
+  right: 20px;
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 1rem;
+}
+
+/* אנימציית רטט */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.5s ease;
+}
+
+/* עיצוב שדה שגוי */
+.input-error {
+  border: 2px solid red !important;
+}
+
+/* Spinner מעוצב מסתובב */
+.spinner {
+  width: 30px;
+  height: 30px;
+  border: 4px solid rgba(255, 215, 0, 0.3);
+  border-top: 4px solid var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 15px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/* ... כל שאר הקוד שלך נשאר כפי שהוא ... */
+
+/* כפתורי עריכה ומחיקה בכרטיס משחק */
+.game-card {
+  position: relative;
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px; /* רווח בין האלמנטים */
+}
+
+.game-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.game-card h3 {
+  margin: 10px 0 5px;
+  color: var(--accent);
+}
+
+.game-card p {
+  margin: 3px 0;
+  color: var(--text-color);
+}
+
+.game-card button {
+  width: 50%;          /* רוחב אחיד ונוח */
+  padding: 10px 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  margin: 5px 0;       /* ריווח בין הכפתורים */
+}
+
+.game-card .edit-btn {
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+}
+
+.game-card .edit-btn:hover {
+  background-color: var(--btn-hover-bg);
+}
+
+.game-card .delete-btn {
+  background-color: #e74c3c; /* אדום חזק */
+  color: #fff;
+}
+
+.game-card .delete-btn:hover {
+  background-color: #c0392b; /* אדום כהה */
+}
+
+/* עיצוב חדש לשדות טופס */
+form input, form select, form textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: border 0.3s, box-shadow 0.3s;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+form input:focus, form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+}
+#broadcast-message {
+  background-color: #fffbea;
+  border: 1px solid #e6c200;
+  box-shadow: 0 0 6px rgba(255, 215, 0, 0.3);
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  resize: vertical;
+}
+.admin-card {
+  background-color: var(--card-bg);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+  margin-bottom: 30px;
+  transition: box-shadow 0.3s;
+}
+
+.admin-card:hover {
+  box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+}
+.game-card img {
+  border: 2px solid var(--input-border);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
