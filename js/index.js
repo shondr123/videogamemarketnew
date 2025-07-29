@@ -1,7 +1,8 @@
 import {
-  getFeedbacksRecord,
-  updateFeedbacksRecord
+  getTestimonialsRecord,
+  updateTestimonialsRecord
 } from "./jsonbin-helper.js";
+
 
 document.addEventListener('DOMContentLoaded', async () => {
   const form = document.getElementById('review-form');
