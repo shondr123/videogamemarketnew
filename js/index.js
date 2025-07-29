@@ -1,39 +1,39 @@
-// index.js - ניהול טפסי ביקורות וניוזלטר עם שמירה ב-localStorage (אפשר לשדרג בעתיד ל-JSONBin)
-document.addEventListener('DOMContentLoaded', () => {
+import {
+  getFeedbacksRecord,
+  updateFeedbacksRecord
+} from "./jsonbin-helper.js";
+
+document.addEventListener('DOMContentLoaded', async () => {
   const form = document.getElementById('review-form');
   const testimonialsSection = document.getElementById('testimonials');
 
-  document.getElementById('newsletter-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const name = document.getElementById('newsletter-name').value.trim();
-    const email = document.getElementById('newsletter-email').value.trim();
+  // טעינת תגובות קיימות מ-JSONBin
+  try {
+    const feedbacks = await getFeedbacksRecord();
+    feedbacks.forEach(({ name, message }) => {
+      const div = document.createElement('div');
+      div.className = 'testimonial';
+      div.textContent = `"${message}" - ${name}`;
+      testimonialsSection.appendChild(div);
+    });
+  } catch (err) {
+    console.error("Failed to load feedbacks from JSONBin:", err);
+  }
 
-    if (name && email) {
-      const list = JSON.parse(localStorage.getItem('newsletter')) || [];
-      list.push({ name, email });
-      localStorage.setItem('newsletter', JSON.stringify(list));
-      document.getElementById('newsletter-response').textContent = '✅ Getting you on all the news!';
-      this.reset();
-    }
-  });
-
-  const savedReviews = JSON.parse(localStorage.getItem('reviews')) || [];
-  savedReviews.forEach(({ name, message }) => {
-    const div = document.createElement('div');
-    div.className = 'testimonial';
-    div.textContent = `"${message}" - ${name}`;
-    testimonialsSection.appendChild(div);
-  });
-
-  form.addEventListener('submit', function(e) {
+  // שליחת תגובה חדשה
+  form.addEventListener('submit', async function (e) {
     e.preventDefault();
     const name = document.getElementById('name').value.trim();
     const message = document.getElementById('message').value.trim();
 
-    if (name && message) {
-      const review = { name, message };
-      savedReviews.push(review);
-      localStorage.setItem('reviews', JSON.stringify(savedReviews));
+    if (!name || !message) return;
+
+    try {
+      const currentFeedbacks = await getFeedbacksRecord();
+      const newFeedback = { name, message };
+      currentFeedbacks.push(newFeedback);
+
+      await updateFeedbacksRecord(currentFeedbacks);
 
       const newDiv = document.createElement('div');
       newDiv.className = 'testimonial';
@@ -41,6 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
       testimonialsSection.appendChild(newDiv);
 
       form.reset();
+    } catch (err) {
+      console.error("Failed to save feedback:", err);
     }
   });
 });
