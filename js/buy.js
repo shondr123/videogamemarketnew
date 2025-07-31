@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   const paymentInfoInput = document.getElementById("payment-info");
   const responseMsg = document.getElementById("purchase-response");
 
+  // אתחל EmailJS עם המפתח הציבורי
   emailjs.init("9TPOlHWBM_c-MQiLd");
 
-  // שליפת משחק מהרשומות
   const data = await getFullRecord();
   const game = (data.games || []).find(g => g.id === gameId);
 
@@ -21,13 +21,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  selectedGameContainer.innerHTML = `
+  selectedGameContainer.innerHTML = 
     <img src="${game.image}" alt="${game.title}" style="width: 150px; border-radius: 8px;" />
     <h3>${game.title}</h3>
     <p>Price: ₪${game.price}</p>
-  `;
+  ;
 
-  // הצגת שדה תשלום נוסף לפי אמצעי שנבחר
   paymentSelect.addEventListener("change", () => {
     const method = paymentSelect.value;
     if (method === "Credit Card") {
@@ -41,7 +40,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  // שליחת טופס רכישה
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -50,7 +48,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const address = document.getElementById("address").value.trim();
     const paymentMethod = paymentSelect.value;
     const paymentInfo = paymentInfoInput.value.trim();
-    const orderCode = `GM${Math.floor(Math.random() * 1000000)}`;
+
+    const orderCode = GM${Math.floor(Math.random() * 1000000)};
 
     emailjs.send("service_2niea85", "template_ou4acvp", {
       order_id: orderCode,
