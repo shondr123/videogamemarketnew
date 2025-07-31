@@ -1,4 +1,4 @@
- import {
+import {
   getFullRecord,
   updateFullRecord,
   getSubscribersRecord
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       e.target.value = url;
     }
     if (url && url.startsWith("http")) {
-      preview.innerHTML = <img src="${url}" alt="Preview" style="width: 120px; border-radius: 8px;" />;
+      preview.innerHTML = `<img src="${url}" alt="Preview" style="width: 120px; border-radius: 8px;" />`;
     } else {
       preview.innerHTML = "";
     }
@@ -83,14 +83,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     games.forEach((game) => {
       const card = document.createElement("div");
       card.className = "game-card";
-      card.innerHTML = 
+      card.innerHTML = `
         <img src="${game.image}" alt="${game.title}" />
         <h3>${game.title}</h3>
         <p>${game.price}₪</p>
         <p>Rating: ${game.rating} ⭐</p>
         <button class="btn edit-btn">Edit</button>
         <button class="btn delete-btn">Delete</button>
-      ;
+      `;
       container.appendChild(card);
 
       card.querySelector(".edit-btn").addEventListener("click", () => {
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("image").value = game.image;
         document.getElementById("description").value = game.description || "";
         document.getElementById("video").value = game.video || "";
-        preview.innerHTML = <img src="${game.image}" alt="Preview" style="width: 120px; border-radius: 8px;" />;
+        preview.innerHTML = `<img src="${game.image}" alt="Preview" style="width: 120px; border-radius: 8px;" />`;
 
         existingGames = existingGames.filter(g => g.id !== game.id);
         fullRecord.games = existingGames;
@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const table = document.createElement("table");
     table.style.width = "100%";
     table.style.borderCollapse = "collapse";
-    table.innerHTML = 
+    table.innerHTML = `
       <thead>
         <tr>
           <th style="border-bottom: 2px solid #ccc; padding: 8px; text-align: left;">Name</th>
@@ -133,14 +133,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         </tr>
       </thead>
       <tbody>
-        ${subscribers.map(sub => 
+        ${subscribers.map(sub => `
           <tr>
             <td style="padding: 8px;">${sub.name || "-"}</td>
             <td style="padding: 8px;">${sub.email}</td>
           </tr>
-        ).join("")}
+        `).join("")}
       </tbody>
-    ;
+    `;
     section.appendChild(table);
   }
 
