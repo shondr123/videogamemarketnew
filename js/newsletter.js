@@ -4,7 +4,7 @@ const MASTER_KEY = "$2a$10$r3JROibQVtotu7ZvhZoiF.Z.Rn3M/zc1mGC.HPxfaqsci8unJx9d6
 
 // שליפת רשימת נרשמים
 async function getSubscribersRecord() {
-  const res = await fetch(https://api.jsonbin.io/v3/b/${BIN_ID}/latest, {
+  const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
     headers: { "X-Access-Key": ACCESS_KEY }
   });
   const data = await res.json();
@@ -19,7 +19,7 @@ async function getSubscribersRecord() {
 
 // עדכון הרשימה
 async function updateSubscribersRecord(updatedRecord) {
-  await fetch(https://api.jsonbin.io/v3/b/${BIN_ID}, {
+  await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       await addNewsletterSubscriber(name, email);
 
-     const welcomeMessage = `
+      const welcomeMessage = `
 Welcome to the Game Store family! We're excited to have you on board.
 
 Your subscription has been successfully noted, and you're now ready to explore all the great features we offer.
@@ -84,7 +84,6 @@ You will be the first to know about everything!
 
 Keep your eyes up for secret discounts and more!
 `;
-
 
       await emailjs.send("service_2niea85", "template_fe3q71v", {
         email: email,
