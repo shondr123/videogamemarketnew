@@ -8,7 +8,7 @@ const MASTER_KEY = "$2a$10$r3JROibQVtotu7ZvhZoiF.Z.Rn3M/zc1mGC.HPxfaqsci8unJx9d6
 
 // --- Games ---
 async function getFullRecord() {
-  const res = await fetch(https://api.jsonbin.io/v3/b/${GAMES_BIN_ID}/latest, {
+  const res = await fetch(`https://api.jsonbin.io/v3/b/${GAMES_BIN_ID}/latest`, {
     headers: { "X-Access-Key": ACCESS_KEY },
   });
   const data = await res.json();
@@ -16,7 +16,7 @@ async function getFullRecord() {
 }
 
 async function updateFullRecord(updatedRecord) {
-  const res = await fetch(https://api.jsonbin.io/v3/b/${GAMES_BIN_ID}, {
+  const res = await fetch(`https://api.jsonbin.io/v3/b/${GAMES_BIN_ID}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -29,7 +29,7 @@ async function updateFullRecord(updatedRecord) {
 
 // --- Subscribers ---
 async function getSubscribersRecord() {
-  const res = await fetch(https://api.jsonbin.io/v3/b/${SUBSCRIBERS_BIN_ID}/latest, {
+  const res = await fetch(`https://api.jsonbin.io/v3/b/${SUBSCRIBERS_BIN_ID}/latest`, {
     headers: { "X-Access-Key": ACCESS_KEY },
   });
   const data = await res.json();
@@ -38,7 +38,7 @@ async function getSubscribersRecord() {
 }
 
 async function updateSubscribersRecord(updatedRecord) {
-  const res = await fetch(https://api.jsonbin.io/v3/b/${SUBSCRIBERS_BIN_ID}, {
+  const res = await fetch(`https://api.jsonbin.io/v3/b/${SUBSCRIBERS_BIN_ID}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -51,7 +51,7 @@ async function updateSubscribersRecord(updatedRecord) {
 
 // --- Feedbacks ---
 async function getFeedbacksRecord() {
-  const res = await fetch(https://api.jsonbin.io/v3/b/${FEEDBACKS_BIN_ID}/latest, {
+  const res = await fetch(`https://api.jsonbin.io/v3/b/${FEEDBACKS_BIN_ID}/latest`, {
     headers: { "X-Access-Key": ACCESS_KEY },
   });
   const data = await res.json();
@@ -60,7 +60,7 @@ async function getFeedbacksRecord() {
 
 async function updateFeedbacksRecord(feedbacks) {
   const updatedData = { feedbacks };
-  const res = await fetch(https://api.jsonbin.io/v3/b/${FEEDBACKS_BIN_ID}, {
+  const res = await fetch(`https://api.jsonbin.io/v3/b/${FEEDBACKS_BIN_ID}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
