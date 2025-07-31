@@ -2,80 +2,78 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Game Market – Home</title>
-
-  <!-- Main CSS -->
   <link rel="stylesheet" href="css/style.css" />
-
-  <!-- Favicon -->
   <link rel="icon" href="assets/favicon.png" type="image/png" />
+  <script>
+    const theme = localStorage.getItem("theme");
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    }
+  </script>
 </head>
 <body>
-  <!-- ===== Header ===== -->
   <header>
-    <button id="toggle-theme" style="position:absolute;top:20px;right:20px;">🌓</button>
-    <h1>Game Market</h1>
-
-    <nav class="centered-nav">
-      <a href="index.html">Home</a>
-      <a href="market.html">Market</a>
-      <a href="contact.html">Contact</a>
-      <a href="about.html">About</a>
-      <a href="admin-login.html">Admin</a>
+    <nav class="main-nav">
+      <h1>VIDEO GAME MARKET</h1>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="market.html">Market</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="admin-login.html">Admin</a></li>
+      </ul>
+      <button id="toggle-theme" title="Toggle Theme">🌙</button>
     </nav>
   </header>
 
-  <!-- ===== Main Content ===== -->
   <main>
-    <!-- Intro -->
     <section class="intro">
       <h2>Welcome to the Ultimate Game Marketplace!</h2>
       <p>Discover the best deals on top‑rated PC and console games. Curated for real gamers.</p>
     </section>
 
-    <!-- Newsletter -->
     <section id="newsletter">
       <h3>Join Our Newsletter</h3>
       <p>Get the latest updates and discounts directly to your inbox!</p>
-
       <form id="newsletter-form">
-        <input type="text"  id="newsletter-name"  name="name"  placeholder="Your Name"  required />
+        <input type="text" id="newsletter-name" name="name" placeholder="Your Name" required />
         <input type="email" id="newsletter-email" name="email" placeholder="Your Email" required />
         <button type="submit">Subscribe</button>
       </form>
-
       <div id="newsletter-spinner" class="spinner" style="display:none;"></div>
       <p id="newsletter-response"></p>
     </section>
 
-    <!-- Testimonials -->
     <section id="testimonials">
       <h2>What our players say</h2>
-      <!-- Reviews are loaded dynamically from JSONBin -->
     </section>
 
-    <!-- Testimonial Form -->
     <section id="testimonial-form">
       <h3>Leave a Review</h3>
-
       <form id="review-form">
-        <input   type="text" id="name"    placeholder="Your Name"    required />
+        <input type="text" id="name" placeholder="Your Name" required />
         <textarea id="message" placeholder="Your feedback..." required></textarea>
-        <button  type="submit">Submit</button>
+        <button type="submit">Submit</button>
       </form>
     </section>
   </main>
 
-  <!-- ===== Footer ===== -->
   <footer>
     <p>&copy; 2025 Game Market. All rights reserved.</p>
   </footer>
 
-  <!-- ===== Scripts ===== -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script src="js/newsletter.js" type="module"></script>
-  <script src="js/index.js"      type="module"></script>
-  <script src="js/theme.js"      type="module"></script>
+  <script src="js/index.js" type="module"></script>
+  <script src="js/theme.js" type="module"></script>
+  <script>
+    document.querySelectorAll('.main-nav a').forEach(link => {
+      if (link.getAttribute('href') === location.pathname.split('/').pop()) {
+        link.classList.add('active');
+      }
+    });
+  </script>
 </body>
 </html>
