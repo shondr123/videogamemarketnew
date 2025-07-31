@@ -1,19 +1,15 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const summaryContainer = document.getElementById("order-summary");
-  const data = JSON.parse(sessionStorage.getItem("purchaseData"));
+document.addEventListener('DOMContentLoaded', () => {
+  const purchaseData = JSON.parse(sessionStorage.getItem('purchaseData'));
 
-  if (!data) {
-    summaryContainer.innerHTML = "<p>אין נתוני רכישה להצגה.</p>";
-    return;
-  }
+  if (!purchaseData) return;
 
-  summaryContainer.innerHTML = `
-    <h2>תודה על ההזמנה!</h2>
-    <img src="${data.image}" alt="${data.title}" style="width: 150px; border-radius: 8px;" />
-    <p><strong>שם המשחק:</strong> ${data.title}</p>
-    <p><strong>מחיר:</strong> ₪${data.price}</p>
-    <p><strong>שם הלקוח:</strong> ${data.name}</p>
-    <p><strong>אימייל:</strong> ${data.email}</p>
-    <p><strong>מספר הזמנה:</strong> ${data.orderCode}</p>
-  `;
+  document.getElementById('name').textContent = Hi ${purchaseData.name}, your purchase was successful.;
+  document.getElementById('order-code').textContent = purchaseData.orderCode;
+
+  const container = document.getElementById('purchased-game');
+  container.innerHTML = 
+    <h3>${purchaseData.title}</h3>
+    <img src="${purchaseData.image}" alt="${purchaseData.title}" style="width: 150px; border-radius: 8px;" />
+    <p>Price: ₪${purchaseData.price}</p>
+  ;
 });
