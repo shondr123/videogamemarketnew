@@ -1,33 +1,63 @@
-import { getFeedbacksRecord, updateFeedbacksRecord } from './jsonbin-helper.js';
+import {
+  getFeedbacksRecord,
+  updateFeedbacksRecord
+} from "./jsonbin-helper.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("feedback-form");
-  const response = document.getElementById("feedback-response");
+document.addEventListener('DOMContentLoaded', async () => {
+  const form = document.getElementById('review-form');
+  const testimonialsSection = document.getElementById('testimonials');
 
-  if (!form) return; // אם אין טופס פידבק – לא נדרש
+  // טעינת תגובות קיימות מ-JSONBin
+  try {
+    const feedbacks = await getFeedbacksRecord();
+    feedbacks.forEach(({ name, message }) => {
+      const div = document.createElement('div');
+      div.className = 'testimonial';
+      div.textContent = "${message}" - ${name};
+      testimonialsSection.appendChild(div);
+    });
+  } catch (err) {
+    console.error("Failed to load feedbacks from JSONBin:", err);
+  }
 
-  form.addEventListener("submit", async (e) => {
+  // שליחת תגובה חדשה
+  form.addEventListener('submit', async function (e) {
     e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const message = document.getElementById('message').value.trim();
 
-    const name = document.getElementById("feedback-name").value.trim();
-    const message = document.getElementById("feedback-message").value.trim();
-
-    if (!name || !message) {
-      response.textContent = "❌ נא למלא שם והודעה.";
-      return;
-    }
+    if (!name || !message) return;
 
     try {
-      const feedbacks = await getFeedbacksRecord();
-      const newFeedback = { name, message, date: new Date().toISOString() };
-      feedbacks.push(newFeedback);
-      await updateFeedbacksRecord(feedbacks);
+      const currentFeedbacks = await getFeedbacksRecord();
+      const newFeedback = { name, message };
+      currentFeedbacks.push(newFeedback);
 
-      response.textContent = "✅ תודה על המשוב!";
+      await updateFeedbacksRecord(currentFeedbacks);
+
+      const newDiv = document.createElement('div');
+      newDiv.className = 'testimonial';
+      newDiv.textContent = "${message}" - ${name};
+      testimonialsSection.appendChild(newDiv);
+
       form.reset();
     } catch (err) {
-      console.error("Error saving feedback:", err);
-      response.textContent = "❌ שגיאה בשליחת הפידבק.";
+      console.error("Failed to save feedback:", err);
+    }
+  });
+
+  // Newsletter שמירה (עדיין ב-localStorage, תוכל לשדרג בהמשך ל-JSONBin גם כן)
+  document.getElementById('newsletter-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = document.getElementById('newsletter-name').value.trim();
+    const email = document.getElementById('newsletter-email').value.trim();
+
+    if (name && email) {
+      const list = JSON.parse(localStorage.getItem('newsletter')) || [];
+      list.push({ name, email });
+      localStorage.setItem('newsletter', JSON.stringify(list));
+      document.getElementById('newsletter-response').textContent = '✅ Getting you on all the news!';
+      this.reset();
     }
   });
 });
