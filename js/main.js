@@ -38,14 +38,14 @@ function displayGames(games) {
   games.forEach(game => {
     const card = document.createElement('div');
     card.className = 'game-card';
-    card.innerHTML = 
-      <img src="${game.image}" alt="${game.title}" />
-      <h3>${game.title}</h3>
-      <p>${game.price}₪</p>
-      <p>Rating: ${game.rating} ⭐</p>
-      <a href="game.html?id=${game.id}" class="btn">View Game</a>
-      <a href="buy.html?id=${game.id}" class="btn">Buy Now</a>
-    ;
+    card.innerHTML = `
+  <img src="${game.image}" alt="${game.title}" />
+  <h3>${game.title}</h3>
+  <p>${game.price}</p>
+  <p>Rating: ${game.rating} ⭐</p>
+  <a href="game.html?id=${game.id}" class="btn">View Game</a>
+  <a href="buy.html?id=${game.id}" class="btn">Buy Now</a>
+`;
     container.appendChild(card);
   });
 }
