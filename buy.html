@@ -2,29 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Game Market – Purchase</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Purchase Game</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" href="assets/favicon.png" type="image/png" />
-  <script>
-    const theme = localStorage.getItem("theme");
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    }
-  </script>
 </head>
 <body>
   <header>
-    <nav class="main-nav">
-      <h1>VIDEO GAME MARKET</h1>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="market.html">Market</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="admin-login.html">Admin</a></li>
-      </ul>
-      <button id="toggle-theme" title="Toggle Theme">🌙</button>
+    <button id="toggle-theme" style="position: absolute; top: 20px; right: 20px;">🌓</button>
+    <h1>Complete Your Purchase</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="market.html">Market</a>
     </nav>
   </header>
 
@@ -52,19 +41,8 @@
     <p id="purchase-response" style="margin-top: 15px; color: red;"></p>
   </main>
 
-  <footer>
-    <p>&copy; 2025 Game Market. All rights reserved.</p>
-  </footer>
-
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script src="js/buy.js" type="module"></script>
   <script src="js/theme.js" type="module"></script>
-  <script>
-    document.querySelectorAll('.main-nav a').forEach(link => {
-      if (link.getAttribute('href') === location.pathname.split('/').pop()) {
-        link.classList.add('active');
-      }
-    });
-  </script>
 </body>
 </html>
