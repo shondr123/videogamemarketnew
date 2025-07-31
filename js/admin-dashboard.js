@@ -1,146 +1,200 @@
-import { getFullRecord, updateFullRecord } from "./jsonbin-helper.js";
+ import {
+  getFullRecord,
+  updateFullRecord,
+  getSubscribersRecord
+} from './jsonbin-helper.js';
 
-// טעינת המשחקים ונרשמים
+emailjs.init("9TPOlHWBM_c-MQiLd");
+
 document.addEventListener("DOMContentLoaded", async () => {
-  await renderGames();
-  await renderSubscribers();
-});
-
-async function renderGames() {
-  const { games } = await getFullRecord();
-  const container = document.getElementById("game-list");
-  container.innerHTML = "";
-
-  if (!games || games.length === 0) {
-    container.innerHTML = "<p>לא קיימים משחקים.</p>";
-    return;
-  }
-
-  games.forEach((game, index) => {
-    const card = document.createElement("div");
-    card.className = "game-card";
-    card.innerHTML = `
-      <img src="${game.image}" alt="${game.title}" />
-      <h3>${game.title}</h3>
-      <p>${game.price}₪ | Rating: ${game.rating} ⭐</p>
-      <button class="btn delete-btn" data-id="${game.id}">❌ מחק</button>
-    `;
-    container.appendChild(card);
-  });
-
-  // מחיקה עם אישור
-  document.querySelectorAll(".delete-btn").forEach((btn) => {
-    btn.addEventListener("click", async () => {
-      const id = parseInt(btn.dataset.id);
-      const modal = document.getElementById("confirm-modal");
-      modal.classList.remove("hidden");
-
-      document.getElementById("confirm-yes").onclick = async () => {
-        const data = await getFullRecord();
-        const updated = data.games.filter(g => g.id !== id);
-        await updateFullRecord({ ...data, games: updated });
-        modal.classList.add("hidden");
-        await renderGames();
-      };
-
-      document.getElementById("confirm-no").onclick = () => {
-        modal.classList.add("hidden");
-      };
-    });
-  });
-}
-
-document.getElementById("add-game-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const title = document.getElementById("title").value.trim();
-  const price = parseFloat(document.getElementById("price").value);
-  const rating = parseFloat(document.getElementById("rating").value);
-  const image = document.getElementById("image").value.trim();
-  const description = document.getElementById("description").value.trim();
-  const video = document.getElementById("video").value.trim();
-
-  const newGame = {
-    id: Date.now(),
-    title,
-    price,
-    rating,
-    image,
-    description,
-    video,
-  };
-
-  const data = await getFullRecord();
-  const updatedGames = [...(data.games || []), newGame];
-  await updateFullRecord({ ...data, games: updatedGames });
-
-  document.getElementById("admin-response").textContent = "✅ Game added successfully!";
-  e.target.reset();
-  document.getElementById("preview").innerHTML = "";
-  await renderGames();
-});
-
-// תצוגה מקדימה לתמונה
-document.getElementById("image").addEventListener("input", (e) => {
-  const url = e.target.value.trim();
+  const form = document.getElementById("add-game-form");
   const preview = document.getElementById("preview");
-  preview.innerHTML = url ? `<img src="${url}" style="width: 100px; border-radius: 5px;" />` : "";
-});
+  const modal = document.getElementById("confirm-modal");
+  const confirmYesBtn = document.getElementById("confirm-yes");
+  const confirmNoBtn = document.getElementById("confirm-no");
+  const broadcastForm = document.getElementById("broadcast-form");
+  const broadcastTextarea = document.getElementById("broadcast-message");
+  const broadcastStatus = document.getElementById("broadcast-status");
 
-// טעינת רשימת נרשמים
-async function renderSubscribers() {
-  const subs = await getSubscribers();
-  const list = document.getElementById("newsletter-list");
-  if (!subs || subs.length === 0) {
-    list.innerHTML = "<p>אין נרשמים עדיין.</p>";
-    return;
-  }
+  let fullRecord = await getFullRecord();
+  let existingGames = fullRecord.games || [];
 
-  const ul = document.createElement("ul");
-  subs.forEach(s => {
-    const li = document.createElement("li");
-    li.textContent = s.email;
-    ul.appendChild(li);
-  });
+  let subscriberRecord = await getSubscribersRecord();
+  let subscribers = subscriberRecord.subscribers || [];
 
-  list.innerHTML = "";
-  list.appendChild(ul);
-}
+  let gameToDeleteId = null;
 
-// שליחת מייל לכל המנויים
-document.getElementById("broadcast-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
+  displayGames(existingGames);
+  displaySubscribers(subscribers);
 
-  const message = document.getElementById("broadcast-message").value.trim();
-  const status = document.getElementById("broadcast-status");
-  const subs = await getSubscribers();
-
-  if (!message || subs.length === 0) {
-    status.textContent = "לא ניתן לשלוח – אין נרשמים או תוכן ריק.";
-    return;
-  }
-
-  emailjs.init("9TPOlHWBM_c-MQiLd");
-
-  for (const s of subs) {
-    await emailjs.send("service_2niea85", "template_1ly1khq", {
-      email: s.email,
-      subject: "עדכון מחנות Game Market",
-      message,
-    });
-  }
-
-  status.textContent = "✅ נשלח לכל המנויים בהצלחה!";
-  e.target.reset();
-});
-
-// קבלת נרשמים מ־JSONBin
-async function getSubscribers() {
-  const res = await fetch("https://api.jsonbin.io/v3/b/68647fee8a456b7966b9c5f1/latest", {
-    headers: {
-      "X-Master-Key": "$2a$10$r3JROibQVtotu7ZvhZoiF.Z.Rn3M/zc1mGC.HPxfaqsci8unJx9d6",
+  document.getElementById("image").addEventListener("change", (e) => {
+    let url = e.target.value.trim();
+    if (url.startsWith("https://imgur.com/")) {
+      url = url.replace("https://imgur.com/", "https://i.imgur.com/");
+      e.target.value = url;
+    }
+    if (url && url.startsWith("http")) {
+      preview.innerHTML = <img src="${url}" alt="Preview" style="width: 120px; border-radius: 8px;" />;
+    } else {
+      preview.innerHTML = "";
     }
   });
-  const data = await res.json();
-  return data.record.subscribers || [];
-}
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const title = document.getElementById("title").value.trim();
+    const price = parseFloat(document.getElementById("price").value);
+    const rating = parseFloat(document.getElementById("rating").value);
+    const image = document.getElementById("image").value.trim();
+    const description = document.getElementById("description").value.trim();
+    const video = document.getElementById("video").value.trim();
+
+    if (!title || isNaN(price) || isNaN(rating) || !image || !image.startsWith("http")) {
+      document.getElementById("admin-response").textContent = "Please fill all fields with valid data.";
+      return;
+    }
+
+    const newGame = {
+      id: Date.now(),
+      title,
+      price,
+      rating,
+      image,
+      description,
+      video
+    };
+
+    existingGames = [...existingGames, newGame];
+    fullRecord.games = existingGames;
+
+    await updateFullRecord(fullRecord);
+
+    document.getElementById("admin-response").textContent = "✅ Game saved to server!";
+    form.reset();
+    preview.innerHTML = "";
+    displayGames(existingGames);
+  });
+
+  function displayGames(games) {
+    const container = document.getElementById("game-list");
+    container.innerHTML = "";
+
+    games.forEach((game) => {
+      const card = document.createElement("div");
+      card.className = "game-card";
+      card.innerHTML = 
+        <img src="${game.image}" alt="${game.title}" />
+        <h3>${game.title}</h3>
+        <p>${game.price}₪</p>
+        <p>Rating: ${game.rating} ⭐</p>
+        <button class="btn edit-btn">Edit</button>
+        <button class="btn delete-btn">Delete</button>
+      ;
+      container.appendChild(card);
+
+      card.querySelector(".edit-btn").addEventListener("click", () => {
+        document.getElementById("title").value = game.title;
+        document.getElementById("price").value = game.price;
+        document.getElementById("rating").value = game.rating;
+        document.getElementById("image").value = game.image;
+        document.getElementById("description").value = game.description || "";
+        document.getElementById("video").value = game.video || "";
+        preview.innerHTML = <img src="${game.image}" alt="Preview" style="width: 120px; border-radius: 8px;" />;
+
+        existingGames = existingGames.filter(g => g.id !== game.id);
+        fullRecord.games = existingGames;
+      });
+
+      card.querySelector(".delete-btn").addEventListener("click", () => {
+        gameToDeleteId = game.id;
+        modal.classList.remove("hidden");
+      });
+    });
+  }
+
+  function displaySubscribers(subscribers) {
+    const section = document.getElementById("newsletter-list");
+    section.innerHTML = "<h2>Newsletter Subscribers</h2>";
+
+    if (!subscribers.length) {
+      section.innerHTML += "<p>No subscribers yet.</p>";
+      return;
+    }
+
+    const table = document.createElement("table");
+    table.style.width = "100%";
+    table.style.borderCollapse = "collapse";
+    table.innerHTML = 
+      <thead>
+        <tr>
+          <th style="border-bottom: 2px solid #ccc; padding: 8px; text-align: left;">Name</th>
+          <th style="border-bottom: 2px solid #ccc; padding: 8px; text-align: left;">Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${subscribers.map(sub => 
+          <tr>
+            <td style="padding: 8px;">${sub.name || "-"}</td>
+            <td style="padding: 8px;">${sub.email}</td>
+          </tr>
+        ).join("")}
+      </tbody>
+    ;
+    section.appendChild(table);
+  }
+
+  confirmYesBtn.addEventListener("click", async () => {
+    if (gameToDeleteId !== null) {
+      existingGames = existingGames.filter(g => g.id !== gameToDeleteId);
+      fullRecord.games = existingGames;
+      await updateFullRecord(fullRecord);
+      displayGames(existingGames);
+      gameToDeleteId = null;
+      modal.classList.add("hidden");
+    }
+  });
+
+  confirmNoBtn.addEventListener("click", () => {
+    gameToDeleteId = null;
+    modal.classList.add("hidden");
+  });
+
+  // ✅ שליחת מייל כללי
+  if (broadcastForm) {
+    broadcastForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const message = broadcastTextarea.value.trim();
+      if (!message) {
+        broadcastStatus.textContent = "נא להזין הודעה לשליחה.";
+        broadcastStatus.style.color = "red";
+        return;
+      }
+
+      broadcastStatus.textContent = "שולח הודעה... ⏳";
+      broadcastStatus.style.color = "#fff";
+
+      try {
+        for (const subscriber of subscribers) {
+          await emailjs.send("service_2niea85", "template_fe3q71v", {
+            email: subscriber.email,
+            message: message
+          });
+        }
+
+        broadcastStatus.textContent = "✅ ההודעה נשלחה לכל הנרשמים בהצלחה!";
+        broadcastStatus.style.color = "green";
+        broadcastTextarea.value = "";
+      } catch (error) {
+        console.error("Error sending broadcast:", error);
+        broadcastStatus.textContent = "❌ אירעה שגיאה בשליחה.";
+        broadcastStatus.style.color = "red";
+      }
+
+      setTimeout(() => {
+        broadcastStatus.textContent = "";
+      }, 6000);
+    });
+  }
+});
