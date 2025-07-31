@@ -1,34 +1,53 @@
 import { getFullRecord } from './jsonbin-helper.js';
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const params = new URLSearchParams(window.location.search);
-  const gameId = parseInt(params.get("id"));
+// פונקציה להמרת URL רגיל של יוטיוב ל-embed URL
+function getEmbedUrl(url) {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+  if (match && match[2].length === 11) {
+    return https://www.youtube.com/embed/${match[2]};
+  }
+  return url; // אם כבר מוטמע או לא מתאים, תחזיר אותו כמו שהוא
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const gameId = urlParams.get("id");
+
+  const gameTitleEl = document.getElementById("game-title");
+  const gameImageEl = document.getElementById("game-image");
+  const gamePriceEl = document.getElementById("game-price");
+  const gameDescriptionEl = document.getElementById("game-description");
+  const videoContainer = document.getElementById("video-container");
 
   const data = await getFullRecord();
-  const game = (data.games || []).find(g => g.id === gameId);
-
-  const container = document.getElementById("game-details");
+  const games = data.games || [];
+  const game = games.find(g => g.id == gameId);
 
   if (!game) {
-    container.innerHTML = "<p>Game not found.</p>";
+    gameTitleEl.textContent = "Game not found";
     return;
   }
 
-  container.innerHTML = `
-    <div class="game-info">
-      <img src="${game.image}" alt="${game.title}" class="game-img" />
-      <div class="game-meta">
-        <h2>${game.title}</h2>
-        <p><strong>Price:</strong> ₪${game.price}</p>
-        <p><strong>Rating:</strong> ${game.rating} ⭐</p>
-        <p>${game.description}</p>
-        <a href="buy.html?id=${game.id}" class="btn">Buy Now</a>
-      </div>
-    </div>
+  gameTitleEl.textContent = game.title;
+  gameImageEl.src = game.image;
+  gamePriceEl.textContent = Price: ₪${game.price};
+  gameDescriptionEl.textContent = game.description || "";
 
-    <div class="game-video">
-      <h3>Gameplay Video</h3>
-      <iframe src="${game.video}" frameborder="0" allowfullscreen></iframe>
-    </div>
-  `;
+  if (game.video) {
+    const embedUrl = getEmbedUrl(game.video);
+    videoContainer.innerHTML = 
+      <iframe
+        src="${embedUrl}"
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        width="560"
+        height="315"
+        frameborder="0"
+      ></iframe>
+    ;
+  } else {
+    videoContainer.innerHTML = "";
+  }
 });
