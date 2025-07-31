@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       await addNewsletterSubscriber(name, email);
 
-      const welcomeMessage = 
+     const welcomeMessage = `
 Welcome to the Game Store family! We're excited to have you on board.
 
 Your subscription has been successfully noted, and you're now ready to explore all the great features we offer.
@@ -83,7 +83,8 @@ Your subscription has been successfully noted, and you're now ready to explore a
 You will be the first to know about everything!
 
 Keep your eyes up for secret discounts and more!
-;
+`;
+
 
       await emailjs.send("service_2niea85", "template_fe3q71v", {
         email: email,
