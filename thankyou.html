@@ -1,104 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Thank You</title>
-<link rel="stylesheet" href="css/style.css" />
-<style>
-  body {
-    background-color: #121212;
-    color: #FFD700;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Game Market – Thank You</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="assets/favicon.png" type="image/png" />
+  <script>
+    const theme = localStorage.getItem("theme");
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    }
+  </script>
+  <style>
+    body {
+      background-color: #121212;
+      color: #FFD700;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-  header nav {
-    background-color: #1e1e1e;
-    padding: 15px 0;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(255, 215, 0, 0.2);
-  }
+    header nav {
+      background-color: #1e1e1e;
+      padding: 15px 0;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(255, 215, 0, 0.2);
+    }
 
-  header nav a {
-    color: #FFD700;
-    margin: 0 20px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 18px;
-  }
+    header nav a {
+      color: #FFD700;
+      margin: 0 20px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 18px;
+    }
 
-  main {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 3rem 1rem;
-  }
+    main {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem 1rem;
+    }
 
-  .thankyou-card {
-    background-color: #1e1e1e;
-    padding: 2rem 3rem;
-    border-radius: 10px;
-    max-width: 400px;
-    width: 100%;
-    box-shadow: 0 0 20px #FFD700;
-    text-align: center;
-  }
+    .thankyou-card {
+      background-color: #1e1e1e;
+      padding: 2rem 3rem;
+      border-radius: 10px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 0 20px #FFD700;
+      text-align: center;
+    }
 
-  .thankyou-card img {
-    max-width: 100%;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    box-shadow: 0 0 15px #FFD700;
-  }
+    .thankyou-card img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      box-shadow: 0 0 15px #FFD700;
+    }
 
-  .thankyou-card h2 {
-    margin: 0.5rem 0 1rem;
-    font-size: 24px;
-    color: #FFD700;
-  }
+    .thankyou-card h2 {
+      margin: 0.5rem 0 1rem;
+      font-size: 24px;
+      color: #FFD700;
+    }
 
-  .thankyou-card p {
-    margin: 0.3rem 0;
-    font-size: 16px;
-  }
+    .thankyou-card p {
+      margin: 0.3rem 0;
+      font-size: 16px;
+    }
 
-  .thankyou-card strong {
-    font-weight: 700;
-  }
+    .thankyou-card strong {
+      font-weight: 700;
+    }
 
-  .back-button {
-    margin-top: 1.5rem;
-    background-color: #FFD700;
-    border: none;
-    padding: 12px 25px;
-    font-size: 16px;
-    font-weight: 700;
-    border-radius: 6px;
-    cursor: pointer;
-    color: #000;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 0 12px #FFD700;
-  }
+    .back-button {
+      margin-top: 1.5rem;
+      background-color: #FFD700;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #000;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 0 12px #FFD700;
+    }
 
-  .back-button:hover {
-    background-color: #e6c200;
-  }
+    .back-button:hover {
+      background-color: #e6c200;
+    }
 
-  footer {
-    background-color: #1e1e1e;
-    color: #888;
-    text-align: center;
-    padding: 1rem 0;
-    font-size: 14px;
-    box-shadow: 0 -2px 4px rgba(255, 215, 0, 0.2);
-  }
-</style>
+    footer {
+      background-color: #1e1e1e;
+      color: #888;
+      text-align: center;
+      padding: 1rem 0;
+      font-size: 14px;
+      box-shadow: 0 -2px 4px rgba(255, 215, 0, 0.2);
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -122,7 +129,7 @@
   </main>
 
   <footer>
-    © 2025 Game Market. All rights reserved.
+    &copy; 2025 Game Market. All rights reserved.
   </footer>
 
   <script>
