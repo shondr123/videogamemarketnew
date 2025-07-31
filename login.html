@@ -3,56 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Game Market – Login</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" href="assets/favicon.png" type="image/png" />
-  <title>Game Market Login</title>
+  <script>
+    const theme = localStorage.getItem("theme");
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    }
+  </script>
   <style>
     body {
       background-color: #121212;
       color: #fff;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
+      padding: 0;
     }
     .login-container {
+      max-width: 360px;
+      margin: 80px auto;
       background-color: #222;
-      padding: 30px 40px;
+      padding: 30px;
       border-radius: 12px;
       box-shadow: 0 0 15px #ffd700aa;
-      width: 320px;
       text-align: center;
-      box-sizing: border-box;
     }
-    h2 {
+    .login-container h2 {
       color: #ffd700;
       margin-bottom: 20px;
     }
-    input {
+    .login-container input {
       width: 100%;
-      padding: 12px 10px;
-      margin: 8px 0;
+      padding: 12px;
+      margin: 10px 0;
       border: none;
       border-radius: 6px;
       font-size: 1rem;
-      box-sizing: border-box;
     }
-    button {
+    .login-container button {
       width: 100%;
-      padding: 12px 0;
+      padding: 12px;
       margin: 8px 0;
+      background-color: #ffd700;
       border: none;
       border-radius: 6px;
-      background-color: #ffd700;
       color: #000;
       font-weight: bold;
       font-size: 1rem;
       cursor: pointer;
-      transition: background-color 0.3s ease;
     }
-    button:hover {
+    .login-container button:hover {
       background-color: #e6c200;
     }
     #message {
@@ -69,19 +70,38 @@
   </style>
 </head>
 <body>
-  <div class="login-container">
-    <h2>Game Market Login</h2>
-    <input type="email" id="email" placeholder="Email" autocomplete="username" />
-    <input type="password" id="password" placeholder="Password" autocomplete="current-password" />
-    <button id="loginBtn">Login</button>
-    <button id="registerBtn">Register</button>
-    <button id="guestBtn">Continue as Guest</button>
-    <div id="message"></div>
-  </div>
+  <header>
+    <nav class="main-nav">
+      <h1>VIDEO GAME MARKET</h1>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="market.html">Market</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="admin-login.html">Admin</a></li>
+      </ul>
+      <button id="toggle-theme" title="Toggle Theme">🌙</button>
+    </nav>
+  </header>
 
-  <!-- Firebase App (the core Firebase SDK) -->
+  <main>
+    <div class="login-container">
+      <h2>Game Market Login</h2>
+      <input type="email" id="email" placeholder="Email" autocomplete="username" />
+      <input type="password" id="password" placeholder="Password" autocomplete="current-password" />
+      <button id="loginBtn">Login</button>
+      <button id="registerBtn">Register</button>
+      <button id="guestBtn">Continue as Guest</button>
+      <div id="message"></div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Game Market. All rights reserved.</p>
+  </footer>
+
+  <!-- Firebase -->
   <script type="module">
-    // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
     import {
       getAuth,
@@ -90,7 +110,6 @@
       signInAnonymously
     } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
-    // Your web app's Firebase configuration (תעדכן עם הקונפיג שלך)
     const firebaseConfig = {
       apiKey: "AIzaSyCYMpEaL4VnGK2YWBpLaZrwrwSHTC7GIso",
       authDomain: "game-store-3fec7.firebaseapp.com",
@@ -101,7 +120,6 @@
       measurementId: "G-SBRQEJW31P"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
@@ -129,7 +147,6 @@
       try {
         await signInWithEmailAndPassword(auth, email, password);
         showMessage("Login successful!");
-        // כאן ניתן להפנות לעמוד אחר
         window.location.href = "index.html";
       } catch (error) {
         showMessage("Login failed: " + error.message, true);
@@ -157,10 +174,18 @@
       try {
         await signInAnonymously(auth);
         showMessage("Guest login successful!");
-        // כאן ניתן להפנות לעמוד אחר
-         window.location.href = "index.html";
+        window.location.href = "index.html";
       } catch (error) {
         showMessage("Guest login failed: " + error.message, true);
+      }
+    });
+  </script>
+
+  <script src="js/theme.js" type="module"></script>
+  <script>
+    document.querySelectorAll('.main-nav a').forEach(link => {
+      if (link.getAttribute('href') === location.pathname.split('/').pop()) {
+        link.classList.add('active');
       }
     });
   </script>
