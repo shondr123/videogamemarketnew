@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     feedbacks.forEach(({ name, message }) => {
       const div = document.createElement('div');
       div.className = 'testimonial';
-      div.textContent = "${message}" - ${name};
+      div.textContent = `${message} - ${name}`;
       testimonialsSection.appendChild(div);
     });
   } catch (err) {
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const newDiv = document.createElement('div');
       newDiv.className = 'testimonial';
-      newDiv.textContent = "${message}" - ${name};
+      newDiv.textContent = `${message} - ${name}`;
       testimonialsSection.appendChild(newDiv);
 
       form.reset();
