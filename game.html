@@ -3,28 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Game Market – Game Details</title>
+  <title>Game Details</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" href="assets/favicon.png" type="image/png" />
-  <script>
-    const theme = localStorage.getItem("theme");
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    }
-  </script>
 </head>
 <body>
   <header>
-    <nav class="main-nav">
-      <h1>VIDEO GAME MARKET</h1>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="market.html">Market</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="admin-login.html">Admin</a></li>
-      </ul>
-      <button id="toggle-theme" title="Toggle Theme">🌙</button>
+    <button id="toggle-theme" style="position: absolute; top: 20px; right: 20px;">🌓</button>
+    <h1>Game Details</h1>
+    <nav>
+      <a href="market.html">Back to Market</a>
     </nav>
   </header>
 
@@ -36,18 +24,7 @@
     <div id="video-container" style="margin-top: 30px;"></div>
   </main>
 
-  <footer>
-    <p>&copy; 2025 Game Market. All rights reserved.</p>
-  </footer>
-
   <script src="js/game.js" type="module"></script>
   <script src="js/theme.js" type="module"></script>
-  <script>
-    document.querySelectorAll('.main-nav a').forEach(link => {
-      if (link.getAttribute('href') === location.pathname.split('/').pop()) {
-        link.classList.add('active');
-      }
-    });
-  </script>
 </body>
 </html>
