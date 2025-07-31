@@ -71,7 +71,6 @@ async function updateFeedbacksRecord(feedbacks) {
   return res.json();
 }
 
-// ✅ יצוא יחיד של כל הפונקציות
 export {
   getFullRecord,
   updateFullRecord,
